@@ -1,5 +1,5 @@
 beforeEach(() => {
-  // cy.visit(Cypress.env("baseUrl"))
+  // cy.visit(Cypress.env("baseUrl")) 
 
   // zkratka do 4. kroku
   cy.visit(
@@ -10,7 +10,7 @@ beforeEach(() => {
 
 describe("should get to combobox", () => {
   it("should select value from listbox and auto-fill city and psč", () => {
-    typeIntoTextField("Ulice a č.p.", "Sokolská stezka", { delay: 10 })
+    typeIntoTextField("Ulice a č.p.", "Sokolská stezka", { delay: 50 })
 
     cy.get("tr > td")
       .contains("Sokolská stezka 480")
@@ -33,9 +33,8 @@ function typeIntoTextField(label: string, inputText: string, options?: Partial<C
     .contains(label)
     .parent()
     .parent()
-    .within(() => {
-      cy.get("input").type(inputText, options)
-    })
+    .find("input")
+    .type(inputText, options)
 }
 
 /**
@@ -48,7 +47,6 @@ function checkTextFieldValue(label: string, expectedValue: string) {
     .contains(label)
     .parent()
     .parent()
-    .within(() => {
-      cy.get("input").should("have.value", expectedValue)
-    })
+    .find("input")
+    .should("have.value", expectedValue)
 }
